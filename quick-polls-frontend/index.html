@@ -22,10 +22,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+    <h4><b id="welcome">My Dashboard</b></h4>
   </header>
 
   <div class="row-padding margin-bottom">
+    <div class="quarter">
+      <div class="container teal padding-16">
+        <div class="left"><i class="fa fa-share-alt xxxlarge"></i></div>
+        <div class="right">
+          <h3>23</h3>
+        </div>
+        <div class="clear"></div>
+        <h4>Create A Poll</h4>
+      </div>
+    </div>
     <div class="quarter">
       <div class="container red padding-16">
         <div class="left"><i class="fa fa-comment xxxlarge"></i></div>
@@ -33,7 +43,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <h3>52</h3>
         </div>
         <div class="clear"></div>
-        <h4>Messages</h4>
+        <h4>Pending Polls</h4>
       </div>
     </div>
     <div class="quarter">
@@ -43,17 +53,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <h3>99</h3>
         </div>
         <div class="clear"></div>
-        <h4>Views</h4>
-      </div>
-    </div>
-    <div class="quarter">
-      <div class="container teal padding-16">
-        <div class="left"><i class="fa fa-share-alt xxxlarge"></i></div>
-        <div class="right">
-          <h3>23</h3>
-        </div>
-        <div class="clear"></div>
-        <h4>Shares</h4>
+        <h4>Closed Polls</h4>
       </div>
     </div>
     <div class="quarter">
@@ -63,7 +63,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <h3>50</h3>
         </div>
         <div class="clear"></div>
-        <h4>Users</h4>
+        <h4>Friends</h4>
       </div>
     </div>
   </div>
@@ -71,12 +71,24 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="panel">
     <div class="row-padding" style="margin:0 -16px">
       <div class="third">
-        
-        <h5>Regions</h5>
-        <img src="/mages/region.jpg" style="width:100%" alt="Google Regional Map">
+        <h5><b>General Stats</b></h5>
+        <p>Polls that I voted on</p>
+        <div class="grey">
+          <div class="container center padding orange" style="width:75%">+75%</div>
+        </div>
+
+        <p>Successful polls</p>
+        <div class="grey">
+          <div class="container center padding green" style="width:50%">50%</div>
+        </div>
+
+        <p>Unsuccessful polls</p>
+        <div class="grey">
+          <div class="container center padding red" style="width:25%">75%</div>
+        </div>
       </div>
       <div class="twothird">
-        <h5>Feeds</h5>
+        <h5><b>Feeds</b></h5>
         <table class="table striped white">
           <tr>
             <td><i class="fa fa-user text-blue large"></i></td>
@@ -118,77 +130,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </div>
   </div>
   <hr>
-  <div class="container">
-    <h5>General Stats</h5>
-    <p>New Visitors</p>
-    <div class="grey">
-      <div class="container center padding green" style="width:25%">+25%</div>
-    </div>
-
-    <p>New Users</p>
-    <div class="grey">
-      <div class="container center padding orange" style="width:50%">50%</div>
-    </div>
-
-    <p>Bounce Rate</p>
-    <div class="grey">
-      <div class="container center padding red" style="width:75%">75%</div>
-    </div>
-  </div>
   <hr>
 
   <div class="container">
-    <h5>Countries</h5>
-    <table class="table striped bordered border hoverable white">
-      <tr>
-        <td>United States</td>
-        <td>65%</td>
-      </tr>
-      <tr>
-        <td>UK</td>
-        <td>15.7%</td>
-      </tr>
-      <tr>
-        <td>Russia</td>
-        <td>5.6%</td>
-      </tr>
-      <tr>
-        <td>Spain</td>
-        <td>2.1%</td>
-      </tr>
-      <tr>
-        <td>India</td>
-        <td>1.9%</td>
-      </tr>
-      <tr>
-        <td>France</td>
-        <td>1.5%</td>
-      </tr>
-    </table><br>
-    <button class="button dark-grey">More Countries  <i class="fa fa-arrow-right"></i></button>
-  </div>
-  <hr>
-  <div class="container">
-    <h5>Recent Users</h5>
-    <ul class="ul card-4 white">
-      <li class="padding-16">
-        <img src="/mages/avatar2.png" class="left circle margin-right" style="width:35px">
-        <span class="xlarge">Mike</span><br>
-      </li>
-      <li class="padding-16">
-        <img src="/mages/avatar5.png" class="left circle margin-right" style="width:35px">
-        <span class="xlarge">Jill</span><br>
-      </li>
-      <li class="padding-16">
-        <img src="/mages/avatar6.png" class="left circle margin-right" style="width:35px">
-        <span class="xlarge">Jane</span><br>
-      </li>
-    </ul>
-  </div>
-  <hr>
-
-  <div class="container">
-    <h5>Recent Comments</h5>
+    <h5><b>Recent Comments</b></h5>
     <div class="row">
       <div class="col m2 text-center">
         <img class="circle" src="/mages/avatar3.png" style="width:96px;height:96px">
@@ -210,30 +155,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </div>
   </div>
   <br>
-  <div class="container dark-grey padding-32">
-    <div class="row">
-      <div class="container third">
-        <h5 class="bottombar border-green">Demographic</h5>
-        <p>Language</p>
-        <p>Country</p>
-        <p>City</p>
-      </div>
-      <div class="container third">
-        <h5 class="bottombar border-red">System</h5>
-        <p>Browser</p>
-        <p>OS</p>
-        <p>More</p>
-      </div>
-      <div class="container third">
-        <h5 class="bottombar border-orange">Target</h5>
-        <p>Users</p>
-        <p>Active</p>
-        <p>Geo</p>
-        <p>Interests</p>
-      </div>
-    </div>
-  </div>
-
+  
   <!-- Footer -->
   <footer class="container padding-16 light-grey">
     <h4>FOOTER</h4>
@@ -243,30 +165,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <!-- End page content -->
 </div>
 
-<script>
-// Get the Sidebar
-var mySidebar = document.getElementById("mySidebar");
-
-// Get the DIV with overlay effect
-var overlayBg = document.getElementById("myOverlay");
-
-// Toggle between showing and hiding the sidebar, and add overlay effect
-function open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-    overlayBg.style.display = "none";
-  } else {
-    mySidebar.style.display = 'block';
-    overlayBg.style.display = "block";
-  }
-}
-
-// Close the sidebar with the close button
-function close() {
-  mySidebar.style.display = "none";
-  overlayBg.style.display = "none";
-}
-</script>
+<script src="./src/index.js"></script>
 
 </body>
 </html>
