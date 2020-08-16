@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_164435) do
+ActiveRecord::Schema.define(version: 2020_08_16_180333) do
 
   create_table "options", force: :cascade do |t|
     t.string "description"
+    t.integer "poll_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -28,6 +29,16 @@ ActiveRecord::Schema.define(version: 2020_08_16_164435) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_friends", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+  end
+
+  create_table "user_polls", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "poll_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -35,14 +46,9 @@ ActiveRecord::Schema.define(version: 2020_08_16_164435) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users_friends", force: :cascade do |t|
+  create_table "votes", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "friend_id"
-  end
-
-  create_table "users_polls", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "poll_id"
+    t.integer "option_id"
   end
 
 end
