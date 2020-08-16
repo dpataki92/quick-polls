@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  resources :user, only: [:show]
+  resources :users, only [:index]
+  resources :polls, only [:index, :new, :create]
+  get "/polls/closed", to: "polls#closed"
 end
