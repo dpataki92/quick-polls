@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
     
     has_many :options, through: :polls
-    has_many :votes, through: :options
+    has_many :votes
 
     validates :username, presence: true
 end

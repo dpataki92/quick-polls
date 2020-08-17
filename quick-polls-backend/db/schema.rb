@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 2020_08_16_180333) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer "user_id"
     t.integer "option_id"
+    t.integer "user_id"
   end
 
 end
