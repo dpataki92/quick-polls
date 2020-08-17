@@ -5,7 +5,7 @@ const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
 
 document.addEventListener("DOMContentLoaded", () => {
     createOrRemoveForm();
-
+    listPendingForms();
     
 })
 
@@ -29,4 +29,14 @@ function createOrRemoveForm() {
           form.style.display = "block";
         }
     })
+}
+
+function listPendingForms() {
+  document.getElementById("pendingPolls").addEventListener("click", () => {
+    fetch(PENDING_POLLS_URL)
+    .then(resp => resp.json())
+    .then(function (json) {
+      console.log(json);
+    })
+  })
 }
