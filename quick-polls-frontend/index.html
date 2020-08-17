@@ -25,11 +25,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <div class="main" style="margin-left:10px;margin-top:43px;">
 
   <!-- Header -->
-  <header class="container" style="padding-top:22px">
+  <br>
     <h4><b id="welcome">My Dashboard</b></h4>
-  </header>
 
-  <div class="row-padding margin-bottom">
+ 
     <div class="quarter">
       <div class="container teal padding-16" id="createPoll">
         <div class="left"><i class="fa fa-share-alt xxxlarge"></i></div>
@@ -69,27 +68,30 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <div class="clear"></div>
         <h4>Friends</h4>
       </div>
-    </div>
-  </div>
+    </div><br><br>
+  
   <div class="container createForm">
-    <h5><b>Create poll form</b></h5>
+    <br>
+    <h5 style="text-align: center;"><b>Create poll form</b></h5>
     <form action="/polls" method="POST" class="ul card-4 w3-white">
     
-        <input type="text" id="question" name="poll[question]" class="padding-16" style="width:100%; background-color: #f1f1f1;" placeholder="Question..."><br>
-        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: #f1f1f1;" placeholder="Option 1..."><br>
-        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: #f1f1f1;" placeholder="Option 2..."><br>
-        <button style="width:100%; color:#009688;"><b>+</b> add another option</button>
-        <input type="number" id="end_date" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: #f1f1f1;" placeholder="Voting period in days..."><br>
-        <input type="number" id="vote_requirement" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: #f1f1f1;" placeholder="Number of votes to close the poll..."><br>
-        <select style="width:100%!important; background-color: #f1f1f1!important;" class="selectpicker form-control" multiple data-max-options="50" name="poll[friends][]">
-              <option value="Friend 1" style="width:100%; background-color: #f1f1f1;">Friend 1</option>
+        <input type="text" id="question" name="poll[question]" class="padding-16" style="width:100%; background-color: white;" placeholder="Question..."><br>
+        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: white;" placeholder="Option 1..."><br>
+        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: white;" placeholder="Option 2..."><br>
+        <button style="width:100%; color:#009688; background-color:white;"><b>+</b> add another option</button>
+        <input type="number" id="end_date" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: white;" placeholder="Voting period in days..."><br>
+        <input type="number" id="vote_requirement" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: white;" placeholder="Number of votes to close the poll..."><br>
+        <select class="selectpicker form-control" multiple data-max-options="50" name="poll[friends][]" placeholder="Add friends...">
+              <option value="Friend 1" style="width:100%; background-color: white;">Friend 1</option>
               <option value="Friend 1">Friend 1</option>
               <option value="Friend 1">Friend 1</option>
         </select>
         <input type="submit" id="submitPoll" value="Submit" style="width:100%; background-color: #009688;">
-  </form>
+    </form>
   </div>
+  
   <div class="panel">
+    <br>
     <div class="row-padding" style="margin:0 -16px">
       <div class="third">
         <h5><b>General Stats</b></h5>
