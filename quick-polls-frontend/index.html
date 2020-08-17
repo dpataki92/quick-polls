@@ -3,9 +3,13 @@
 <title>Quick Polls</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="styles.css">
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
@@ -13,7 +17,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- Top container -->
 <div class="bar top black large" style="z-index:4">
-  <span class="bar-item right">Logo</span>
+  <span class="bar-item right"><i class="fa fa-bars"></i></span>
 </div>
 
 
@@ -69,18 +73,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </div>
   <div class="container createForm">
     <h5><b>Create poll form</b></h5>
-    <form action="/polls" method="POST">
-    <ul class="ul card-4 w3-white">
-      <li class="padding-16">
-        <span class="xlarge">Mike</span><br>
-      </li>
-      <li class="padding-16">
-        <span class="xlarge">Jill</span><br>
-      </li>
-      <li class="padding-16">
-        <span class="xlarge">Jane</span><br>
-      </li>
-    </ul>
+    <form action="/polls" method="POST" class="ul card-4 w3-white">
+    
+        <input type="text" id="question" name="poll[question]" class="padding-16" style="width:100%; background-color: #f1f1f1;" placeholder="Question..."><br>
+        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: #f1f1f1;" placeholder="Option 1..."><br>
+        <input type="text" name="poll[options][]" class="padding-16" style="width:100%; background-color: #f1f1f1;" placeholder="Option 2..."><br>
+        <button style="width:100%; color:#009688;"><b>+</b> add another option</button>
+        <input type="number" id="end_date" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: #f1f1f1;" placeholder="Voting period in days..."><br>
+        <input type="number" id="vote_requirement" name="poll[end_date]" class="padding-16" max="100" style="width:100%; background-color: #f1f1f1;" placeholder="Number of votes to close the poll..."><br>
+        <select style="width:100%!important; background-color: #f1f1f1!important;" class="selectpicker form-control" multiple data-max-options="50" name="poll[friends][]">
+              <option value="Friend 1" style="width:100%; background-color: #f1f1f1;">Friend 1</option>
+              <option value="Friend 1">Friend 1</option>
+              <option value="Friend 1">Friend 1</option>
+        </select>
+        <input type="submit" id="submitPoll" value="Submit" style="width:100%; background-color: #009688;">
   </form>
   </div>
   <div class="panel">
