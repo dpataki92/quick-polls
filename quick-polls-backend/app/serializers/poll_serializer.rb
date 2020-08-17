@@ -7,7 +7,7 @@ class PollSerializer
     def to_serialized_json
       @poll.to_json(:include => {
         :users => {:only => [:username]},
-        :options => {:only => [:description, :votes]},
+        :options => {:only => [:description, :id]},
         :votes => {:only => [:option_id]}
       })
     end

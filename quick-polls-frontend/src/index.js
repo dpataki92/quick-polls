@@ -31,12 +31,41 @@ function createOrRemoveForm() {
     })
 }
 
+class Poll {
+  constructor(question, options, votes, end_date = null, vote_requirement = null) {
+    this.question = question;
+    this.options = options;
+    this.votes = votes;
+    this.end_date = end_date;
+    this.vote_requirement = vote_requirement;
+  }
+
+  calculatePercentage() {
+    const total = this.votes.length;
+    const result = [];
+    for (let i = 0; i < this.options.length; i++) {
+      let optionData = [];
+      let voteCount = 0;
+      this.votes.forEach(v => {
+        if (v.option_id === this.options[i].id) {
+          voteCount += 1;
+        }
+      })
+      optionData.push(this.options[i].description)
+      optionData.push(Math.floor(voteCount / total * 100))
+      result.push(optionData)
+    }
+    return result;
+  }
+
+}
+
 function listPendingForms() {
   document.getElementById("pendingPolls").addEventListener("click", () => {
     fetch(PENDING_POLLS_URL)
     .then(resp => resp.json())
     .then(function (json) {
-      console.log(json)
+      
     })
   })
 }
