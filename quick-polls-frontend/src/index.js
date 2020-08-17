@@ -32,7 +32,7 @@ function createOrRemoveForm() {
 }
 
 class Poll {
-  constructor(question, options, votes, end_date = null, vote_requirement = null) {
+  constructor(question, options, votes, end_date, vote_requirement) {
     this.question = question;
     this.options = options;
     this.votes = votes;
@@ -60,12 +60,38 @@ class Poll {
 
 }
 
+function createNewDiagramFromPoll(poll) {
+  let div = document.querySelector(".panel .third");
+  div.innerHTML = "";
+  for (let i = 0; i < poll.options; i++) {
+    let title = document.createElement("p");
+    title.innerHTML = poll.options[i].description;
+    let pollDiv = document.createElement("div");
+    pollDiv.classList = "grey";
+    let percentageDiv = document.createElement("div");
+    percentageDiv.classList = "container center padding orange";
+    let percentageValue = poll.calculatePercentage.find(option => option[0] === poll.options[i].description)[0];
+    percentageDiv.style.width = `${percentageValue}%`;
+    percentageDiv.innerHTML = percentageValue;
+    pollDiv.appendChild(percentageDiv);
+    div.appendChild(title);
+    div.appendChild(pollDiv)
+  }
+  
+
+
+}
+
 function listPendingForms() {
   document.getElementById("pendingPolls").addEventListener("click", () => {
     fetch(PENDING_POLLS_URL)
     .then(resp => resp.json())
     .then(function (json) {
-      
+      for (let i = 0; i < json.length; i++) {
+        let poll = new Poll(json[i].question, json[i].options, json[i].votes, json[i].end_date, json[i].vote_requirement);
+        createNewDiagramFromPoll(poll);
+        
+      }
     })
   })
 }
