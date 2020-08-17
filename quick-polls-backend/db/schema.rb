@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2020_08_16_180333) do
   create_table "votes", force: :cascade do |t|
     t.integer "option_id"
     t.integer "user_id"
+    t.integer "poll_id"
   end
 
 end

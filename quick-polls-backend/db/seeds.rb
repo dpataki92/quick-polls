@@ -72,7 +72,7 @@ User.all.each do |u|
     if u.id < 10
         u.polls.each do |p|
             option = p.options[rand 0..p.options.length-1]
-            Vote.create(option: option, user: u)
+            Vote.create(option: option, user: u, poll: p)
         end
     end
 end

@@ -3,6 +3,7 @@ class CreateVotes < ActiveRecord::Migration[6.0]
     create_table :votes do |t|
       t.integer :option_id
       t.integer :user_id
+      t.integer :poll_id
     end
   end
 end
