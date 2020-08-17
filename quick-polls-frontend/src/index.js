@@ -36,7 +36,7 @@ function listPendingForms() {
     fetch(PENDING_POLLS_URL)
     .then(resp => resp.json())
     .then(function (json) {
-      console.log(json[2]);
+      console.log(json);
     })
   })
 }
