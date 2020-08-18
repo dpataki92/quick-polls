@@ -77,9 +77,8 @@ function createNewDiagramFromPoll(poll) {
     pollDiv.appendChild(percentageDiv);
     div.appendChild(title);
     div.appendChild(pollDiv)
-    div.style.display = "block"
-    document.querySelector(".row-padding").appendChild(div);
   }
+  return div;
 }
 
 function createNewVotingFormFromPoll(poll) {
@@ -95,7 +94,6 @@ function createNewVotingFormFromPoll(poll) {
   question.innerHTML = poll.question;
   question.style.fontWeight = 'bold';
   div.insertBefore(question, div.querySelector("table"));
-  div.style.display = "block";
 
   for (let i = 0; i < poll.options.length; i++) {
     let tr = document.createElement("tr");
@@ -119,7 +117,7 @@ function createNewVotingFormFromPoll(poll) {
     tr.appendChild(td)
     tbody.appendChild(tr)
   }
-  document.querySelector(".row-padding").appendChild(div);
+  return div;
 }
 
 function listPendingForms() {
@@ -131,10 +129,9 @@ function listPendingForms() {
       const diagramDiv = document.querySelector(".third");
       const newsfeedDiv = document.querySelector(".twothird");
 
-      if (diagramDiv.style.display === "none" && newsfeedDiv.style.display === "none") {
+      if (document.querySelector(".row-padding").style.display === "none") {
 
-        diagramDiv.style.display = "block";
-        newsfeedDiv.style.display = "block";
+        document.querySelector(".row-padding").style.display = "block";
         document.querySelector("#pendingPolls h4").innerText = "Pending Polls";
         document.querySelectorAll(".extra").forEach(e => {
           e.remove();
@@ -142,15 +139,19 @@ function listPendingForms() {
 
       } else {
 
-        diagramDiv.style.display = "none";
-        newsfeedDiv.style.display = "none";
+        document.querySelector(".row-padding").style.display = "none";
         document.querySelector("#pendingPolls h4").innerText = "Back to dashboard";
 
         for (let i = 0; i < json.length; i++) {
           let poll = new Poll(json[i].question, json[i].options, json[i].votes, json[i].end_date, json[i].vote_requirement);
-          console.log(poll)
-          createNewDiagramFromPoll(poll);
-          createNewVotingFormFromPoll(poll);
+          let parent = document.createElement("div")
+          parent.classList = "row-padding extra";
+          parent.style.margin = "0 -16px";
+          let div1 = createNewDiagramFromPoll(poll);
+          parent.appendChild(div1);
+          let div2 = createNewVotingFormFromPoll(poll);
+          parent.appendChild(div2);
+          document.querySelector(".panel").appendChild(parent);
         }
       }
       
