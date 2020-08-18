@@ -63,23 +63,52 @@ class Poll {
 function createNewDiagramFromPoll(poll) {
   let div = document.querySelector(".panel .third");
   div.innerHTML = "";
-  for (let i = 0; i < poll.options; i++) {
+  for (let opt of poll.options) {
     let title = document.createElement("p");
-    title.innerHTML = poll.options[i].description;
+    title.innerHTML = opt.description;
     let pollDiv = document.createElement("div");
     pollDiv.classList = "grey";
     let percentageDiv = document.createElement("div");
-    percentageDiv.classList = "container center padding orange";
-    let percentageValue = poll.calculatePercentage.find(option => option[0] === poll.options[i].description)[0];
+    let randomColor = ["red", "green", "orange", "blue", "yellow", "purple"][Math.floor((Math.random() * ["red", "green", "orange", "blue", "yellow", "purple"].length))]
+    percentageDiv.classList = "container center padding " + randomColor;
+    let percentageValue = poll.calculatePercentage().find(option => option[0] === opt.description)[1];
     percentageDiv.style.width = `${percentageValue}%`;
-    percentageDiv.innerHTML = percentageValue;
+    percentageDiv.innerHTML = `${percentageValue}%`;
     pollDiv.appendChild(percentageDiv);
     div.appendChild(title);
     div.appendChild(pollDiv)
   }
-  
+}
 
+function createNewVotingFormFromPoll(poll) {
+  let div = document.querySelector(".panel .twothird");
+  let tbody = div.querySelector("tbody");
+  div.removeChild(div.querySelector("h5"));
+  tbody.innerHTML = "";
+  let question = document.createElement("h5");
+  question.innerHTML = poll.question;
+  question.style.fontWeight = 'bold';
+  div.insertBefore(question, div.querySelector("table"));
+  for (let i = 0; i < poll.options.length; i++) {
+    let tr = document.createElement("tr");
+    let td = document.createElement("td");
+    td.innerHTML = poll.options[i].description;
+    tr.appendChild(td)
+    tbody.appendChild(tr)
+  }
+  if (poll.vote_requirement != null) {
+    let tr = document.createElement("tr");
+    let td = document.createElement("td");
+    td.innerHTML = poll.vote_requirement;
+    tbody.appendChild(tr.appendChild(td))
+  }
 
+  if (poll.end_date != null) {
+    let tr = document.createElement("tr");
+    let td = document.createElement("td");
+    td.innerHTML = poll.end_date;
+    tbody.appendChild(tr.appendChild(td))
+  }
 }
 
 function listPendingForms() {
@@ -90,7 +119,7 @@ function listPendingForms() {
       for (let i = 0; i < json.length; i++) {
         let poll = new Poll(json[i].question, json[i].options, json[i].votes, json[i].end_date, json[i].vote_requirement);
         createNewDiagramFromPoll(poll);
-        
+        createNewVotingFormFromPoll(poll);
       }
     })
   })
