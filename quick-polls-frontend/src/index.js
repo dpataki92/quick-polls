@@ -5,8 +5,7 @@ const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    createOrRemoveForm();
-    listPendingForms();
+    loggedIn()
     
 })
 
@@ -16,8 +15,58 @@ function loggedIn() {
   fetch(`${USERS_URL}/logged_in`)
     .then(resp => resp.json())
     .then(function (json) {
-      console.log(json)
+      if (json.message === "no") {
+        loggingIn()
+      } else if (json.message === "yes") {
+        createOrRemoveForm();
+        listPendingForms();
+      }
     })
+}
+
+// creates login form and handles fetch request for login action 
+function loggingIn() {
+  document.querySelector(".main").style.display = "none";
+  document.querySelector(".fa-bars").classList= "fa fa-home";
+
+  let div = document.createElement("div");
+  div.style.textAlign ="center";
+  div.style.marginTop = "100px"
+
+  let title = document.createElement("h2");
+  title.innerText = "Quick polls";
+  title.style.display = "inline-block";
+  title.style.marginLeft = "5px";
+  let img = document.createElement("img");
+  img.src = "assets/pollicon.svg";
+  img.width = "40";
+  img.style.paddingBottom = "10px";
+
+  div.appendChild(img);
+  div.appendChild(title);
+
+  let form = document.createElement("form");
+  form.action = "/users";
+  form.method = "POST";
+  let inputUsername = document.createElement("input");
+  inputUsername.type = "text";
+  inputUsername.name = "username";
+  inputUsername.placeholder = "Username.."
+  let inputPassword = document.createElement("input");
+  inputPassword.type = "password";
+  inputPassword.name = "password";
+  inputPassword.placeholder = "Password.."
+
+  let inputSubmit = document.createElement("input");
+  inputSubmit.type = "submit";
+  inputSubmit.value = "Submit";
+
+  form.appendChild(inputUsername);
+  form.appendChild(inputPassword);
+  form.appendChild(inputSubmit);
+  div.appendChild(form);
+
+  document.querySelector(".bar").after(div);
 }
 
 // displays or hides creat poll form and dashboard based on user interaction
