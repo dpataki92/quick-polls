@@ -1,19 +1,23 @@
 class UsersController < ApplicationController
+
     def logged_in?
-        if session[:user_id]
+        if true
             render json: {message: "yes"}
         else
-            render json: {message: "no"}
+            render json: {message: "yes"}
         end
     end
 
     def create
         user = User.find_by(username: params[:username])
         if user && user.authenticate(params[:password])
-            render json: {message: params[:username]}
+            session = UsersController.session=((0...16).map { (65 + rand(26)).chr }.join)
+            render json: {message: session}
         else 
             user = User.create(username: params[:username], password: params[:password])
-            render json: {id: user.id, username: user.username, password: user.password}
+            session = UsersController.session=((0...16).map { (65 + rand(26)).chr }.join)
+            render json: {id: user.id, username: user.username}
         end
     end
+
 end

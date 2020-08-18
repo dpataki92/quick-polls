@@ -3,10 +3,8 @@ const USERS_URL = `${BASE_URL}/users`
 const PENDING_POLLS_URL = `${BASE_URL}/polls`
 const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
 
-
 document.addEventListener("DOMContentLoaded", () => {
     loggedIn()
-    
 })
 
 
@@ -18,18 +16,22 @@ function loggedIn() {
       if (json.message === "no") {
         loggingIn()
       } else if (json.message === "yes") {
-        createOrRemoveForm();
-        listPendingForms();
+        if (!(document.getElementById("loginForm") == null)) {
+              document.getElementById("loginForm").remove();
+        }
+        document.querySelector(".main").style.display = "block";
+              createOrRemoveForm();
+              listPendingForms();
       }
     })
 }
 
-// creates login form and handles fetch request for login action 
-function loggingIn() {
+// creates login form
+function createLoginForm() {
   document.querySelector(".main").style.display = "none";
-  document.querySelector(".fa-bars").classList= "fa fa-home";
 
   let div = document.createElement("div");
+  div.id = "loginForm";
   div.style.textAlign ="center";
   div.style.marginTop = "100px"
 
@@ -70,34 +72,39 @@ function loggingIn() {
 
   document.querySelector(".bar").after(div);
 
+  return inputSubmit;
+}
 
-  inputSubmit.addEventListener("click", (e) => {
-    e.preventDefault();
-    console.log(e.target.parentNode)
-    let username = e.target.parentNode.querySelector("#username").value;
-    let password = e.target.parentNode.querySelector("#password").value;
+// handles fetch request for login action 
+function loggingIn() {
+  let submit = createLoginForm();
+  submit.addEventListener("click", (e) => {
+  
+  e.preventDefault();
+  let username = e.target.parentNode.querySelector("#username").value;
+  let password = e.target.parentNode.querySelector("#password").value;
 
-    let configObj = {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-      },
-      body: JSON.stringify({
-          username: username,
-          password: password
-      })
+  let configObj = {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    },
+    body: JSON.stringify({
+        username: username,
+        password: password
+    })
   }
   fetch(USERS_URL, configObj)
-                  .then(resp => resp.json())
-                  .then(
-                      function(json) {
-                          console.log(json)
-                      }
-                  )
-                  .catch(function () {
-                      console.log(json['message'])
-                  })
+  .then(resp => resp.json())
+  .then(
+      function(json) {
+        loggedIn()
+      }
+  )
+  .catch(function () {
+      console.log(json['message'])
+  })
   })
   
 }
@@ -184,6 +191,26 @@ function createNewDiagramFromPoll(poll) {
   return div;
 }
 
+function createClickableOption(opt) {
+  console.log(opt)
+  opt.addEventListener("click", (e) => {
+    if (e.target.style.color === "green" || e.target.style.color === "grey") {
+    e.target.style.color = "black";
+    e.target.parentNode.parentNode.querySelectorAll("td").forEach(td => {
+      td.style.color = "black"
+    })
+    
+  } else {
+    e.target.style.color = "green";
+    e.target.parentNode.parentNode.querySelectorAll("td").forEach(td => {
+      if (td.style.color != "green") {
+      td.style.color = "grey"
+      }
+    })
+  }
+  })
+}
+
 function createNewVotingFormFromPoll(poll) {
   let div = document.createElement("div");
   div.classList ="twothird extra";
@@ -203,6 +230,7 @@ function createNewVotingFormFromPoll(poll) {
     let tr = document.createElement("tr");
     let td = document.createElement("td");
     td.innerHTML = poll.options[i].description;
+    createClickableOption(td)
     tr.appendChild(td)
     tbody.appendChild(tr)
   }
@@ -240,7 +268,7 @@ function listPendingForms() {
         })
 
       } else {
-
+        
         rowPaddingDiv.style.display = "none";
         document.querySelector("#pendingPolls h4").innerText = "Back to dashboard";
 
