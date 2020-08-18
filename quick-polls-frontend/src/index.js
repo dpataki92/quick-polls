@@ -51,10 +51,12 @@ function loggingIn() {
   let inputUsername = document.createElement("input");
   inputUsername.type = "text";
   inputUsername.name = "username";
+  inputUsername.id = "username";
   inputUsername.placeholder = "Username.."
   let inputPassword = document.createElement("input");
   inputPassword.type = "password";
   inputPassword.name = "password";
+  inputPassword.id = "password";
   inputPassword.placeholder = "Password.."
 
   let inputSubmit = document.createElement("input");
@@ -67,8 +69,38 @@ function loggingIn() {
   div.appendChild(form);
 
   document.querySelector(".bar").after(div);
-}
 
+
+  inputSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log(e.target.parentNode)
+    let username = e.target.parentNode.querySelector("#username").value;
+    let password = e.target.parentNode.querySelector("#password").value;
+
+    let configObj = {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+      },
+      body: JSON.stringify({
+          username: username,
+          password: password
+      })
+  }
+  fetch(USERS_URL, configObj)
+                  .then(resp => resp.json())
+                  .then(
+                      function(json) {
+                          console.log(json)
+                      }
+                  )
+                  .catch(function () {
+                      console.log(json['message'])
+                  })
+  })
+  
+}
 // displays or hides creat poll form and dashboard based on user interaction
 function createOrRemoveForm() {
   // hiding form for create poll by default
