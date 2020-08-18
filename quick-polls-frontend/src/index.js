@@ -99,15 +99,17 @@ function createNewVotingFormFromPoll(poll) {
   if (poll.vote_requirement != null) {
     let tr = document.createElement("tr");
     let td = document.createElement("td");
-    td.innerHTML = poll.vote_requirement;
-    tbody.appendChild(tr.appendChild(td))
+    td.innerHTML = "Voting requirement:" + poll.vote_requirement;
+    tr.appendChild(td)
+    tbody.appendChild(tr)
   }
 
   if (poll.end_date != null) {
     let tr = document.createElement("tr");
     let td = document.createElement("td");
-    td.innerHTML = poll.end_date;
-    tbody.appendChild(tr.appendChild(td))
+    td.innerHTML = "End date: " + poll.end_date;
+    tr.appendChild(td)
+    tbody.appendChild(tr)
   }
 }
 
