@@ -61,8 +61,8 @@ class Poll {
 }
 
 function createNewDiagramFromPoll(poll) {
-  let div = document.querySelector(".panel .third");
-  div.innerHTML = "";
+  let div = document.createElement("div");
+  div.classList = "third extra";
   for (let opt of poll.options) {
     let title = document.createElement("p");
     title.innerHTML = opt.description;
@@ -77,18 +77,26 @@ function createNewDiagramFromPoll(poll) {
     pollDiv.appendChild(percentageDiv);
     div.appendChild(title);
     div.appendChild(pollDiv)
+    div.style.display = "block"
+    document.querySelector(".row-padding").appendChild(div);
   }
 }
 
 function createNewVotingFormFromPoll(poll) {
-  let div = document.querySelector(".panel .twothird");
-  let tbody = div.querySelector("tbody");
-  div.removeChild(div.querySelector("h5"));
-  tbody.innerHTML = "";
+  let div = document.createElement("div");
+  div.classList ="twothird extra";
+  let table = document.createElement("table");
+  table.classList = "table striped white";
+  let tbody = document.createElement("tbody");
+  table.appendChild(tbody);
+  div.appendChild(table);
+
   let question = document.createElement("h5");
   question.innerHTML = poll.question;
   question.style.fontWeight = 'bold';
   div.insertBefore(question, div.querySelector("table"));
+  div.style.display = "block";
+
   for (let i = 0; i < poll.options.length; i++) {
     let tr = document.createElement("tr");
     let td = document.createElement("td");
@@ -111,6 +119,7 @@ function createNewVotingFormFromPoll(poll) {
     tr.appendChild(td)
     tbody.appendChild(tr)
   }
+  document.querySelector(".row-padding").appendChild(div);
 }
 
 function listPendingForms() {
@@ -118,11 +127,33 @@ function listPendingForms() {
     fetch(PENDING_POLLS_URL)
     .then(resp => resp.json())
     .then(function (json) {
-      for (let i = 0; i < json.length; i++) {
-        let poll = new Poll(json[i].question, json[i].options, json[i].votes, json[i].end_date, json[i].vote_requirement);
-        createNewDiagramFromPoll(poll);
-        createNewVotingFormFromPoll(poll);
+
+      const diagramDiv = document.querySelector(".third");
+      const newsfeedDiv = document.querySelector(".twothird");
+
+      if (diagramDiv.style.display === "none" && newsfeedDiv.style.display === "none") {
+
+        diagramDiv.style.display = "block";
+        newsfeedDiv.style.display = "block";
+        document.querySelector("#pendingPolls h4").innerText = "Pending Polls";
+        document.querySelectorAll(".extra").forEach(e => {
+          e.remove();
+        })
+
+      } else {
+
+        diagramDiv.style.display = "none";
+        newsfeedDiv.style.display = "none";
+        document.querySelector("#pendingPolls h4").innerText = "Back to dashboard";
+
+        for (let i = 0; i < json.length; i++) {
+          let poll = new Poll(json[i].question, json[i].options, json[i].votes, json[i].end_date, json[i].vote_requirement);
+          console.log(poll)
+          createNewDiagramFromPoll(poll);
+          createNewVotingFormFromPoll(poll);
+        }
       }
+      
     })
   })
 }
