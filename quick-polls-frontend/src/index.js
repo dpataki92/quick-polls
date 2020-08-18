@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost:3000"
+const USERS_URL = `${BASE_URL}/users`
 const PENDING_POLLS_URL = `${BASE_URL}/polls`
 const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
 
@@ -8,6 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
     listPendingForms();
     
 })
+
+
+// handles login process if user is not logged in and displays application content to logged in user 
+function loggedIn() {
+  fetch(`${USERS_URL}/logged_in`)
+    .then(resp => resp.json())
+    .then(function (json) {
+      console.log(json)
+    })
+}
 
 // displays or hides creat poll form and dashboard based on user interaction
 function createOrRemoveForm() {
