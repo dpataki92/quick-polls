@@ -3,6 +3,9 @@ const USERS_URL = `${BASE_URL}/users`
 const PENDING_POLLS_URL = `${BASE_URL}/polls`
 const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
 let TOKEN;
+function tokenHash(token) {
+  return {headers: {"Authorization": token}}
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     loggedIn()
@@ -263,7 +266,7 @@ function createNewVotingFormFromPoll(poll) {
 
 function listPendingForms() {
   document.getElementById("pendingPolls").addEventListener("click", () => {
-    fetch(PENDING_POLLS_URL)
+    fetch(PENDING_POLLS_URL, {headers: {"Authorization": TOKEN}})
     .then(resp => resp.json())
     .then(function (json) {
       let rowPaddingDiv = document.querySelector(".row-padding")
