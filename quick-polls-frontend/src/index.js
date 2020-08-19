@@ -2,6 +2,7 @@ const BASE_URL = "http://localhost:3000"
 const USERS_URL = `${BASE_URL}/users`
 const PENDING_POLLS_URL = `${BASE_URL}/polls`
 const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
+let TOKEN;
 
 document.addEventListener("DOMContentLoaded", () => {
     loggedIn()
@@ -10,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // handles login process if user is not logged in and displays application content to logged in user 
 function loggedIn() {
-  fetch(`${USERS_URL}/logged_in`)
+  fetch(`${USERS_URL}/logged_in`, {headers: {"Authorization": TOKEN}})
     .then(resp => resp.json())
     .then(function (json) {
       if (json.message === "no") {
@@ -88,7 +89,7 @@ function loggingIn() {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        "Accept": "application/json",
     },
     body: JSON.stringify({
         username: username,
@@ -99,6 +100,7 @@ function loggingIn() {
   .then(resp => resp.json())
   .then(
       function(json) {
+        TOKEN = json["session"];
         loggedIn()
       }
   )
