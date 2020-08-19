@@ -23,6 +23,7 @@ function loggedIn() {
         document.querySelector(".main").style.display = "block";
               createOrRemoveForm();
               listPendingForms();
+              logout();
       }
     })
 }
@@ -73,6 +74,10 @@ function createLoginForm() {
 
   document.querySelector(".bar").after(div);
 
+  if (document.querySelectorAll("#loginForm").length > 1) {
+    document.querySelector("#loginForm").remove();
+  }
+
   return inputSubmit;
 }
 
@@ -100,7 +105,9 @@ function loggingIn() {
   .then(resp => resp.json())
   .then(
       function(json) {
+        console.log(json)
         TOKEN = json["session"];
+        console.log(TOKEN)
         loggedIn()
       }
   )
@@ -289,5 +296,13 @@ function listPendingForms() {
       }
       
     })
+  })
+}
+
+function logout() {
+  let icon = document.querySelector(".bar-item");
+  icon.addEventListener("click", () => {
+    TOKEN = undefined;
+    loggedIn()
   })
 }
