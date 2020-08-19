@@ -1,27 +1,38 @@
 class UsersController < ApplicationController
 
     def logged_in?
-        if request.env["HTTP_AUTHORIZATION"] === "undefined"
-            render json: {message: "no", token: request.env["HTTP_AUTHORIZATION"]}
+        if true
+            render json: {message: "yes"}
         else
-            render json: {message: "yes", token: request.env["HTTP_AUTHORIZATION"]}
+            render json: {message: "no"}
         end
     end
 
     def create
         user = User.find_by(username: params[:username])
-        if user && user.authenticate(params[:password])
-            session = (0...20).map { (65 + rand(26)).chr }.join
-            user.token = session
-            user.save
-            render json: {session: session}
+        if user 
+            if user.authenticate(params[:password])
+                session[:user_id] = user.id
+                render json: {id: user.id, username: user.username, session: session[:user_id]}
+            else
+                render json: {message: "Sorry, this username has already been taken or you used a wrong password :("}
+            end
         else 
-            user = User.create(username: params[:username], password: params[:password])
-            session = (0...20).map { (65 + rand(26)).chr }.join
-            user.token = session
-            user.save
-            render json: {id: user.id, username: user.username, session: session}
+            user = User.create(user_params)
+            session[:user_id] = user.id
+            render json: {id: user.id, username: user.username, session: session[:user_id]}
         end
+    end
+
+    def logout
+        session.reset
+        render json: {message: "Logout was successful"}
+    end
+
+    private
+
+    def user_params
+        params.require(:user).permit(:username, :password)
     end
 
 

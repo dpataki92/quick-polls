@@ -2,10 +2,6 @@ const BASE_URL = "http://localhost:3000"
 const USERS_URL = `${BASE_URL}/users`
 const PENDING_POLLS_URL = `${BASE_URL}/polls`
 const CLOSED_POLLS_URL = `${BASE_URL}/polls/closed`
-let TOKEN;
-function tokenHash(token) {
-  return {headers: {"Authorization": token}}
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     loggedIn()
@@ -14,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // handles login process if user is not logged in and displays application content to logged in user 
 function loggedIn() {
-  fetch(`${USERS_URL}/logged_in`, {headers: {"Authorization": TOKEN}})
+  fetch(`${USERS_URL}/logged_in`)
     .then(resp => resp.json())
     .then(function (json) {
       if (json.message === "no") {
@@ -24,9 +20,9 @@ function loggedIn() {
               document.getElementById("loginForm").remove();
         }
         document.querySelector(".main").style.display = "block";
-              createOrRemoveForm();
-              listPendingForms();
-              logout();
+        createOrRemoveForm();
+        listPendingForms();
+        logout();
       }
     })
 }
@@ -57,12 +53,12 @@ function createLoginForm() {
   form.method = "POST";
   let inputUsername = document.createElement("input");
   inputUsername.type = "text";
-  inputUsername.name = "username";
+  inputUsername.name = "user[username]";
   inputUsername.id = "username";
   inputUsername.placeholder = "Username.."
   let inputPassword = document.createElement("input");
   inputPassword.type = "password";
-  inputPassword.name = "password";
+  inputPassword.name = "user[password]";
   inputPassword.id = "password";
   inputPassword.placeholder = "Password.."
 
@@ -108,15 +104,15 @@ function loggingIn() {
   .then(resp => resp.json())
   .then(
       function(json) {
-        console.log(json)
-        TOKEN = json["session"];
-        console.log(TOKEN)
+        if (json["message"]) {
+          let p = document.createElement("p");
+          p.innerHTML = json["message"];
+          p.style.color = "red";
+          document.querySelector("h2").after(p);
+        } 
         loggedIn()
       }
   )
-  .catch(function () {
-      console.log(json['message'])
-  })
   })
   
 }
@@ -204,7 +200,6 @@ function createNewDiagramFromPoll(poll) {
 }
 
 function createClickableOption(opt) {
-  console.log(opt)
   opt.addEventListener("click", (e) => {
     if (e.target.style.color === "green" || e.target.style.color === "grey") {
     e.target.style.color = "black";
@@ -266,7 +261,8 @@ function createNewVotingFormFromPoll(poll) {
 
 function listPendingForms() {
   document.getElementById("pendingPolls").addEventListener("click", () => {
-    fetch(PENDING_POLLS_URL, {headers: {"Authorization": TOKEN}})
+    
+    fetch(PENDING_POLLS_URL)
     .then(resp => resp.json())
     .then(function (json) {
       let rowPaddingDiv = document.querySelector(".row-padding")
@@ -303,9 +299,12 @@ function listPendingForms() {
 }
 
 function logout() {
-  let icon = document.querySelector(".bar-item");
-  icon.addEventListener("click", () => {
-    TOKEN = undefined;
+    fetch(`${USERS_URL}/logout`)
+    .then(resp => resp.json())
+    .then(
+        function(json) {
+          console.log(json)
+        }
+    )
     loggedIn()
-  })
 }
